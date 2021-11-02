@@ -8,26 +8,11 @@ using System.IO;
 
 public class DB : MonoBehaviour{
 	//private string dbName = "URI=file:" + Application.persistentDataPath + "/PianoDB.db";
-	//private string dbName = "URI=file:PianoDB.db";
+	private string dbName = "URI=file:PianoDB.db";
 
     // Start is called before the first frame update
     void Start(){
-    	string dbName = "URI=file:" + Application.persistentDataPath + "/PianoDB.db";
-
-    	IDbConnection connectionToDB = new SqliteConnection(dbName);
-    	connectionToDB.Open();
-
-    	IDbCommand query = connectionToDB.CreateCommand();
-    	//query.CommandText = "CREATE TABLE IF NOT EXISTS Users (userID INTEGER PRIMARY KEY UNIQUE NOT NULL, email STRING NOT NULL UNIQUE, username STRING UNIQUE NOT NULL, hashedPwd STRING NOT NULL, xp INTEGER DEFAULT (0), streak INTEGER DEFAULT (0), level INTEGER DEFAULT (0));";
-    	query.CommandText = "CREATE TABLE IF NOT EXISTS test (testID INTEGER, testPlsWork VARCHAR(10));";
-    	query.ExecuteReader();
-
-    	IDbCommand query2 = connectionToDB.CreateCommand();
-    	//query2.CommandText = "INSERT INTO Users (0, '@', 'plsWork', '123', 100, 100, 300);";
-    	query2.CommandText = "INSERT INTO test (1, 'T_T');";
-    	query2.ExecuteNonQuery();
-
-    	connectionToDB.Close();
+    	CreatePianoDB();
     }
 
     // Update is called once per frame
@@ -35,7 +20,7 @@ public class DB : MonoBehaviour{
         
     }
 
-    /*public void CreatePianoDB(){
+    public void CreatePianoDB(){
     	using(var connectionToDB = new SqliteConnection(dbName)){
     		connectionToDB.Open();
 
@@ -52,7 +37,7 @@ public class DB : MonoBehaviour{
 
     		connectionToDB.Close();
     	}
-    }*/
+    }
 
     /*void AddUser(){
     	using(var connectionToDB = new SqliteConnection(dbName)){
