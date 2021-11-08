@@ -1,3 +1,4 @@
 Base path: 'D:/Deni/Programs/Editor/Data', plugins path 'D:/Deni/Programs/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
 
+Cmd: shutdown
