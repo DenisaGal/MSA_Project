@@ -15,11 +15,24 @@ public class DB : MonoBehaviour{
     	CreatePianoDB();
 
         //testing the fuctions below
-        //AddUser(0, "abc", "abc", "abc");
+
+        //A lot of field values have to be unique (see constraints). To avoid errors please check the db before uncommenting
+        AddUser(0, "abc", "abc", "abc");
         AddLesson(0, "abc", 5, 5);
-        //AddPianoKey(0, "abc", "abc", 5);
+        AddPianoKey(0, "abc", "abc", 5);
 
+        DisplayUsers();
+        DisplayLessosns();
+        DisplayPianoKeys();
 
+        getUserByID(0);
+        getLessosnByID(0);
+        getPianoKeysByID(0);
+
+        //comment this if you want to actually see the values in the db
+        DeleteUser(0);
+        DeleteLesson(0);
+        DeletePianoKey(0);
     }
 
     // Update is called once per frame
@@ -57,6 +70,7 @@ public class DB : MonoBehaviour{
             using(var query = connectionToDB.CreateCommand()){
                 //query.CommandText = "INSERT INTO Users VALUES('"+ userID +"', '" + email + "', '" + username + "', '" + hashedPwd + "', " + xp + "', '" + streak + "', '" + level + "');";
                 //!!!!! DO NOT FORGET TO HASH THE PASSWORD
+                //UserID should be incremented automatically before calling the function, as it is not user input
                 query.CommandText = "INSERT INTO Users (userID, email, username, hashedPwd) VALUES('" + userID +"', '" + email + "', '" + username + "', '" + hashedPwd + "');"; //xp, streak, level are 0 by default for new users
                 query.ExecuteNonQuery();
             }
@@ -96,7 +110,7 @@ public class DB : MonoBehaviour{
     }
 
     //display the contents of the tables
-    /*public void DisplayUsers(){
+    public void DisplayUsers(){
         using(var connectionToDB = new SqliteConnection(dbName)){
             connectionToDB.Open();
 
@@ -143,7 +157,7 @@ public class DB : MonoBehaviour{
 
                 using(IDataReader lessonsReader = query.ExecuteReader()){
                     while(lessonsReader.Read()){
-                        Debug.Log("Lesson " + lessonsReader["lessonID"] + ": "  + lessonsReader["title"] + "requires level " + lessonsReader["requiredLevel"] + " and you can get up to " + lessonsReader["maxXP"] + "XP\n\t" + lessonsReader["content"] + "\n");
+                        Debug.Log("Lesson " + lessonsReader["lessonID"] + ": "  + lessonsReader["title"] + " requires level " + lessonsReader["requiredLevel"] + " and you can get up to " + lessonsReader["maxXP"] + "XP.\n\t" + lessonsReader["content"] + "\n");
                     }
                     lessonsReader.Close();
                 }
@@ -191,7 +205,7 @@ public class DB : MonoBehaviour{
             using(var query = connectionToDB.CreateCommand()){
                 query.CommandText = "SELECT * FROM Lessons WHERE lessonID = " + lessonID + ";";
                 IDataReader lessonsReader = query.ExecuteReader();
-                Debug.Log("Lesson " + lessonsReader["lessonID"] + ": "  + lessonsReader["title"] + "requires level " + lessonsReader["requiredLevel"] + " and you can get up to " + lessonsReader["maxXP"] + "XP\n\t" + lessonsReader["content"] + "\n");
+                Debug.Log("Lesson " + lessonsReader["lessonID"] + ": "  + lessonsReader["title"] + " requires level " + lessonsReader["requiredLevel"] + " and you can get up to " + lessonsReader["maxXP"] + "XP.\n\t" + lessonsReader["content"] + "\n");
                 lessonsReader.Close();
             }
 
@@ -238,5 +252,5 @@ public class DB : MonoBehaviour{
 
             connectionToDB.Close();
         }
-    }*/
+    }
 }
