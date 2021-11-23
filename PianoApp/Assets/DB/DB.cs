@@ -4,15 +4,16 @@ using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Data;
 using System.IO;
+using System;
 
 
 public class DB : MonoBehaviour{
-	//private string dbName = "URI=file:" + Application.persistentDataPath + "/PianoDB.db";
-	private string dbName = "URI=file:PianoDB.db";
+    //private string dbName = "URI=file:" + Application.persistentDataPath + "/PianoDB.db";
+    private string dbName = "URI=file:PianoDB.db";
 
     // Start is called before the first frame update
     void Start(){
-    	CreatePianoDB();
+        CreatePianoDB();
 
         //testing the fuctions below
 
@@ -33,6 +34,10 @@ public class DB : MonoBehaviour{
         DeleteUser(0);
         DeleteLesson(0);
         DeletePianoKey(0);
+
+        Debug.Log("Last user ID: " + getLastUserID() + ".\n");
+        Debug.Log("Last lesson ID: " + getLastLessonID() + ".\n");
+        Debug.Log("Last key ID: " + getLastKeyID() + ".\n");
     }
 
     // Update is called once per frame
@@ -42,24 +47,24 @@ public class DB : MonoBehaviour{
 
     //create database with tables
     public void CreatePianoDB(){
-    	using(var connectionToDB = new SqliteConnection(dbName)){
-    		connectionToDB.Open();
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
 
-    		using(var query = connectionToDB.CreateCommand()){
-    			query.CommandText = "CREATE TABLE IF NOT EXISTS Users (userID INTEGER PRIMARY KEY UNIQUE NOT NULL, email STRING NOT NULL UNIQUE, username STRING UNIQUE NOT NULL, hashedPwd STRING NOT NULL, xp INTEGER DEFAULT (0), streak INTEGER DEFAULT (0), level INTEGER DEFAULT (0));";
-    			query.ExecuteNonQuery();
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "CREATE TABLE IF NOT EXISTS Users (userID INTEGER PRIMARY KEY UNIQUE NOT NULL, email STRING NOT NULL UNIQUE, username STRING UNIQUE NOT NULL, hashedPwd STRING NOT NULL, xp INTEGER DEFAULT (0), streak INTEGER DEFAULT (0), level INTEGER DEFAULT (0));";
+                query.ExecuteNonQuery();
 
                 //query.CommandText = "CREATE TABLE IF NOT EXISTS PianoKey (keyID INTEGER PRIMARY KEY NOT NULL UNIQUE, note STRING  NOT NULL, tone STRING NOT NULL, sound BLOB NOT NULL, scale INTEGER NOT NULL);";
                 query.CommandText = "CREATE TABLE IF NOT EXISTS PianoKey (keyID INTEGER PRIMARY KEY NOT NULL UNIQUE, note STRING  NOT NULL, tone STRING NOT NULL, sound BLOB, scale INTEGER NOT NULL);";
-    			query.ExecuteNonQuery();
+                query.ExecuteNonQuery();
 
                 //query.CommandText = "CREATE TABLE IF NOT EXISTS Lessons (lessonID INTEGER PRIMARY KEY NOT NULL UNIQUE, title STRING  NOT NULL, content BLOB  NOT NULL, requiredLevel INTEGER NOT NULL, maxXP INTEGER NOT NULL);";
                 query.CommandText = "CREATE TABLE IF NOT EXISTS Lessons (lessonID INTEGER PRIMARY KEY NOT NULL UNIQUE, title STRING  NOT NULL, content BLOB, requiredLevel INTEGER NOT NULL, maxXP INTEGER NOT NULL);";
-    			query.ExecuteNonQuery();
-    		}
+                query.ExecuteNonQuery();
+            }
 
-    		connectionToDB.Close();
-    	}
+            connectionToDB.Close();
+        }
     }
 
     //add data to the tables
@@ -252,5 +257,81 @@ public class DB : MonoBehaviour{
 
             connectionToDB.Close();
         }
+    }
+
+    //getting the last ID in the table to use when inserting the next entry
+    public int getLastUserID(){
+        int lastID = 0;
+
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT MAX(userID) AS userID FROM Users;";
+                IDataReader usersReader = query.ExecuteReader();
+                if(usersReader["userID"] != DBNull.Value){
+                    lastID = Convert.ToInt32(usersReader["userID"]);
+                    Debug.Log("ID: " + usersReader["userID"] + "\n");
+                }
+                else{
+                    Debug.Log("Users table is empty\n");
+                }
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return lastID;
+    }
+
+    public int getLastKeyID(){
+        int lastID = 0;
+
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT MAX(keyID) AS keyID FROM PianoKey;";
+                IDataReader keysReader = query.ExecuteReader();
+                if(keysReader["keyID"] != DBNull.Value){
+                    lastID = Convert.ToInt32(keysReader["keyID"]);
+                    Debug.Log("ID: " + keysReader["keyID"] + "\n");
+                }
+                else{
+                    Debug.Log("PianoKey table is empty\n");
+                }
+                keysReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return lastID;
+    }
+
+    public int getLastLessonID(){
+        int lastID = 0;
+
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT MAX(lessonID) AS lessonID FROM Lessons;";
+                IDataReader lessonsReader = query.ExecuteReader();
+                if(lessonsReader["lessonID"] != DBNull.Value){
+                    lastID = Convert.ToInt32(lessonsReader["lessonID"]);
+                    Debug.Log("ID: " + lessonsReader["lessonID"] + "\n");
+                }
+                else{
+                    Debug.Log("Lessons table is empty\n");
+                }
+                lessonsReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return lastID;
     }
 }
