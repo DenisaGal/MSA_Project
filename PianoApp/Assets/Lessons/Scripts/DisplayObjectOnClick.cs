@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisplayObjectOnClick : MonoBehaviour
 {
-	public GameObject Note;
+	public GameObject Note, previousNote;
 	
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,8 @@ public class DisplayObjectOnClick : MonoBehaviour
     }
 	
 	public void DisplayNote(){
-		if( Note != null){
+		bool isActive = previousNote.activeSelf;
+		if( Note != null && isActive == true){
 			Note.SetActive(true);			
 		}
 	}
