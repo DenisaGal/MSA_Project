@@ -11,11 +11,12 @@ public class Register : MonoBehaviour
 	public InputField confirmPassword;
 	//public static int id = 1;
 
-	DB pianoDB = new DB();
+	DB pianoDB;
 
     // Start is called before the first frame update
     void Start()
     {
+    	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
         pianoDB.CreatePianoDB();
     }
 
@@ -28,7 +29,7 @@ public class Register : MonoBehaviour
     //!!!!!!!!DO NOT FORGET TO HASH PWD!!!!!!!!
     public void RegisterUser(){//(string email, string username, string password, string confirmPassword){
     	//if(password == confirmPassword){
-    		pianoDB.AddUser(2, email.text, username.text, password.text);
+    		pianoDB.AddUser(3, email.text, username.text, password.text);
     		//this.id += 1;
     		Debug.Log("User added.\n");
     	/*}
