@@ -28,13 +28,13 @@ public class Register : MonoBehaviour
 
     //!!!!!!!!DO NOT FORGET TO HASH PWD!!!!!!!!
     public void RegisterUser(){//(string email, string username, string password, string confirmPassword){
-    	//if(password == confirmPassword){
-    		pianoDB.AddUser(3, email.text, username.text, password.text);
+    	if(string.Equals(password.text, confirmPassword.text)){
+    		pianoDB.AddUser(5, email.text, username.text, password.text);
     		//this.id += 1;
     		Debug.Log("User added.\n");
-    	/*}
+    	}
     	else{
     		Debug.Log("Passwords did not match!");
-    	}*/	
+    	}
     }
 }
