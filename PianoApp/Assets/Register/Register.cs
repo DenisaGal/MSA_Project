@@ -26,6 +26,7 @@ public class Register : MonoBehaviour
     }
 
     //!!!!!!!!DO NOT FORGET TO HASH PWD!!!!!!!!
+    //!!!!!!!!DO NOT FORGET TO HANDLE CONSTRAINT VIOLATIONS VIA POP UPS!!!!!!!!
     public void RegisterUser(){//(string email, string username, string password, string confirmPassword){
     	if(string.Equals(password.text, confirmPassword.text)){
     		pianoDB.AddUser(pianoDB.getLastUserID() + 1, email.text, username.text, password.text);
