@@ -19,7 +19,7 @@ public class EncryptPassword : MonoBehaviour
     }
 
     //Maybe add a !null salt?
-    static string HashString(string text, string salt = "AnaAreMere"){
+    public static string HashString(string text, string salt = "AnaAreMere"){
 	    if (System.String.IsNullOrEmpty(text)){
 	        return System.String.Empty;
 	    }
