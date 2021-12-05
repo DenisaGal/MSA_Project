@@ -1586,6 +1586,7 @@ MonoBehaviour:
   - displayedNote: {fileID: 443277888}
     answer: Si
   result: {fileID: 1543013838}
+  delay: 2
 --- !u!4 &1112893461
 Transform:
   m_ObjectHideFlags: 0
@@ -2173,7 +2174,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +xp
+  m_Text: 
 --- !u!222 &1543013839
 CanvasRenderer:
   m_ObjectHideFlags: 0
