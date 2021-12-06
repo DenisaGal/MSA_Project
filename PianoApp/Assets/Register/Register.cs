@@ -44,7 +44,7 @@ public class Register : MonoBehaviour
     	}
     }
 
-    public boolean checkConstraints(){
+    public bool checkConstraints(){
     	//checks for email
     	if(String.IsNullOrEmpty(email.text)){
     		Debug.Log("Email address field is mandatory.\n"); //should be a pop up
