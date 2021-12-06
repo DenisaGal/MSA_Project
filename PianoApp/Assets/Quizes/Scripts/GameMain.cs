@@ -14,6 +14,7 @@ public class GameMain : MonoBehaviour
     public Text result;
     private static int correctAnswers = 0;
     [SerializeField] private float delay = 3f;
+    [SerializeField] private string nextScene;
     
     void Start()
     {
@@ -40,31 +41,34 @@ public class GameMain : MonoBehaviour
     IEnumerator TransitionToNextQuiz()
     {
         result.text = "Good job!";
+        correctAnswers = 0;
         yield return new WaitForSeconds(delay-0.5f);
 
         currentQuestion.displayedNote.SetActive(false);
-        SceneManager.LoadScene("Quiz1.2Scene");
+        SceneManager.LoadScene(nextScene);
     }
 
     public void UserSelect(string userAnswer)
     {
-
+        //correct answer
         if (userAnswer == currentQuestion.answer){
             result.text = "Correct!"; 
             //+5xp
             correctAnswers++;
-            if(correctAnswers >= 3)
+            
+            if(correctAnswers >= 5)
                 StartCoroutine(TransitionToNextQuiz());
         }
+        //wrong answer
         else{
             result.text = "Wrong :(";
             correctAnswers--;
         }
         
-        if(correctAnswers < 3)
+        if(correctAnswers < 5)
             StartCoroutine(TransitionToNextQuestion());
         
-        //add colours green/red la raspunsuri
+        //add colours green/red la raspunsuri si make stuff pretty
         //cum facem cu xp? cand primeste
     }
 }
