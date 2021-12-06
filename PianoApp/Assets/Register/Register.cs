@@ -44,38 +44,38 @@ public class Register : MonoBehaviour
     	}
     }
 
-    public int checkConstraints(){
+    public boolean checkConstraints(){
     	//checks for email
     	if(String.IsNullOrEmpty(email.text)){
     		Debug.Log("Email address field is mandatory.\n"); //should be a pop up
-    		return -1;
+    		return true;
     	}
-    	else if(pianoDB.isAlreadyUsed(email.text)){
+    	else if(pianoDB.isEmailAlreadyUsed(email.text)){
     		Debug.Log("An account with this email address already exists.\n"); //should be a pop up
-    		return -2;
+    		return true;
     	}
 
     	//checks for username
     	if(String.IsNullOrEmpty(username.text)){
     		Debug.Log("Username field is mandatory.\n"); //should be a pop up
-    		return -3;
+    		return true;
     	}
-    	else if(pianoDB.isAlreadyUsed(username.text)){
+    	else if(pianoDB.isUsernameAlreadyUsed(username.text)){
     		Debug.Log("An account with this username already exists.\n"); //should be a pop up
-    		return -4;
+    		return true;
     	}
 
     	//checks for password
     	if(String.IsNullOrEmpty(password.text)){
     		Debug.Log("Password field is mandatory.\n"); //should be a pop up
-    		return -5;
+    		return true;
     	}
     	if(String.IsNullOrEmpty(confirmPassword.text)){
     		Debug.Log("Confirm password field is mandatory.\n"); //should be a pop up
-    		return -6;
+    		return true;
     	}
 
-    	//if all is good, return 0
-    	return 0;
+    	//if it got here => all is good
+    	return false;
     }
 }
