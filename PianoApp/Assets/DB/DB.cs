@@ -344,7 +344,7 @@ public class DB : MonoBehaviour{
 
     //checks for constraint violations
     //can this be done in only one function/in a better way?
-    public boolean isUsernameAlreadyUsed(string text){
+    public bool isUsernameAlreadyUsed(string text){
         using(var connectionToDB = new SqliteConnection(dbName)){
             connectionToDB.Open();
 
@@ -364,7 +364,7 @@ public class DB : MonoBehaviour{
         return false;
     }
 
-    public boolean isEmailAlreadyUsed(string text){
+    public bool isEmailAlreadyUsed(string text){
         using(var connectionToDB = new SqliteConnection(dbName)){
             connectionToDB.Open();
 

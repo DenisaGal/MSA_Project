@@ -28,8 +28,6 @@ public class Register : MonoBehaviour
         
     }
 
-    //!!!!!!!!DO NOT FORGET TO HANDLE CONSTRAINT VIOLATIONS VIA POP UPS!!!!!!!!
-    //!!!!!!!!CHECK IF EMAIL ADDRESS SEEMS VALID!!!!!!!!
     public void RegisterUser(){
     	if(checkConstraints()){
 			Debug.Log("Please try again.\n"); //should be a pop up?
@@ -46,8 +44,13 @@ public class Register : MonoBehaviour
 
     public bool checkConstraints(){
     	//checks for email
-    	if(String.IsNullOrEmpty(email.text)){
+    	if(string.IsNullOrEmpty(email.text)){
     		Debug.Log("Email address field is mandatory.\n"); //should be a pop up
+    		return true;
+    	}
+    	//is there any better way to do this???? how to check if email address is valid?
+    	else if(!email.text.Contains("@") || !email.text.Contains(".")){
+    		Debug.Log("Please enter a valid email address.\n"); //should be a pop up
     		return true;
     	}
     	else if(pianoDB.isEmailAlreadyUsed(email.text)){
@@ -56,7 +59,7 @@ public class Register : MonoBehaviour
     	}
 
     	//checks for username
-    	if(String.IsNullOrEmpty(username.text)){
+    	if(string.IsNullOrEmpty(username.text)){
     		Debug.Log("Username field is mandatory.\n"); //should be a pop up
     		return true;
     	}
@@ -66,11 +69,11 @@ public class Register : MonoBehaviour
     	}
 
     	//checks for password
-    	if(String.IsNullOrEmpty(password.text)){
+    	if(string.IsNullOrEmpty(password.text)){
     		Debug.Log("Password field is mandatory.\n"); //should be a pop up
     		return true;
     	}
-    	if(String.IsNullOrEmpty(confirmPassword.text)){
+    	if(string.IsNullOrEmpty(confirmPassword.text)){
     		Debug.Log("Confirm password field is mandatory.\n"); //should be a pop up
     		return true;
     	}
