@@ -12,7 +12,9 @@ public class GameMain : MonoBehaviour
     public Question[] questions;
     private Question currentQuestion;
     public Text result;
-    [SerializeField] private float delay = 2f;
+    private static int correctAnswers = 0;
+    [SerializeField] private float delay = 3f;
+    
     void Start()
     {
         GetRandomQuestion();
@@ -34,15 +36,33 @@ public class GameMain : MonoBehaviour
         result.text = "";
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    
+    IEnumerator TransitionToNextQuiz()
+    {
+        result.text = "Good job!";
+        yield return new WaitForSeconds(delay-0.5f);
+
+        currentQuestion.displayedNote.SetActive(false);
+        SceneManager.LoadScene("Quiz1.2Scene");
+    }
 
     public void UserSelect(string userAnswer)
     {
 
-        if (userAnswer == currentQuestion.answer)
-            result.text = "Correct!"; //should get xp here ? or at the end
-        else result.text = "Wrong :(";
-
-        StartCoroutine(TransitionToNextQuestion());
+        if (userAnswer == currentQuestion.answer){
+            result.text = "Correct!"; 
+            //+5xp
+            correctAnswers++;
+            if(correctAnswers >= 3)
+                StartCoroutine(TransitionToNextQuiz());
+        }
+        else{
+            result.text = "Wrong :(";
+            correctAnswers--;
+        }
+        
+        if(correctAnswers < 3)
+            StartCoroutine(TransitionToNextQuestion());
         
         //add colours green/red la raspunsuri
         //cum facem cu xp? cand primeste
