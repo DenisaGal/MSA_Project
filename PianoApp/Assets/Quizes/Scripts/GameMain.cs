@@ -13,7 +13,7 @@ public class GameMain : MonoBehaviour
     private Question currentQuestion;
     public Text result;
     private static int correctAnswers = 0;
-    [SerializeField] private float delay = 3f;
+    [SerializeField] private float delay = 2f;
     [SerializeField] private string nextScene;
     
     void Start()
@@ -55,6 +55,9 @@ public class GameMain : MonoBehaviour
             result.text = "Correct!"; 
             //+5xp
             correctAnswers++;
+            
+            var button = GameObject.FindGameObjectWithTag(userAnswer).GetComponent<Button>();
+            button.GetComponent<Image>().color = Color.green;
 
             if(correctAnswers >= 5)
                 StartCoroutine(TransitionToNextQuiz());
@@ -63,6 +66,9 @@ public class GameMain : MonoBehaviour
         else{
             result.text = "Wrong :(";
             correctAnswers--;
+            
+            var button = GameObject.FindGameObjectWithTag(userAnswer).GetComponent<Button>();
+            button.GetComponent<Image>().color = Color.red;
         }
         
         if(correctAnswers < 5)
