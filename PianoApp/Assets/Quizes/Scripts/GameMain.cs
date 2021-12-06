@@ -55,7 +55,7 @@ public class GameMain : MonoBehaviour
             result.text = "Correct!"; 
             //+5xp
             correctAnswers++;
-            
+
             if(correctAnswers >= 5)
                 StartCoroutine(TransitionToNextQuiz());
         }
