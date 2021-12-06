@@ -344,7 +344,7 @@ public class DB : MonoBehaviour{
 
     //checks for constraint violations
     //can this be done in only one function/in a better way?
-    public int isUsernameAlreadyUsed(string text){
+    public boolean isUsernameAlreadyUsed(string text){
         using(var connectionToDB = new SqliteConnection(dbName)){
             connectionToDB.Open();
 
@@ -353,7 +353,7 @@ public class DB : MonoBehaviour{
                 IDataReader usersReader = query.ExecuteReader();
                 if(usersReader["username"] != DBNull.Value){
                     Debug.Log("Username: " + usersReader["username"] + " already exists in the database.\n");
-                    return 1;
+                    return true;
                 }
                 usersReader.Close();
             }
@@ -361,10 +361,10 @@ public class DB : MonoBehaviour{
             connectionToDB.Close();
         }
 
-        return 0;
+        return false;
     }
 
-    public int isEmailAlreadyUsed(string text){
+    public boolean isEmailAlreadyUsed(string text){
         using(var connectionToDB = new SqliteConnection(dbName)){
             connectionToDB.Open();
 
@@ -373,7 +373,7 @@ public class DB : MonoBehaviour{
                 IDataReader usersReader = query.ExecuteReader();
                 if(usersReader["email"] != DBNull.Value){
                     Debug.Log("Email address: " + usersReader["email"] + " already exists in the database.\n");
-                    return 1;
+                    return true;
                 }
                 usersReader.Close();
             }
@@ -381,6 +381,6 @@ public class DB : MonoBehaviour{
             connectionToDB.Close();
         }
 
-        return 0;
+        return false;
     }
 }
