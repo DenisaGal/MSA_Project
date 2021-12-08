@@ -38,6 +38,12 @@ public class DB : MonoBehaviour{
         Debug.Log("Last user ID: " + getLastUserID() + ".\n");
         Debug.Log("Last lesson ID: " + getLastLessonID() + ".\n");
         Debug.Log("Last key ID: " + getLastKeyID() + ".\n");
+
+        Debug.Log("Check username ana: " + isUsernameAlreadyUsed("ana"));
+        Debug.Log("Check username elena: " + isUsernameAlreadyUsed("elena"));
+
+        Debug.Log("Check email ana: " + isEmailAlreadyUsed("ana@yahoo.com"));
+        Debug.Log("Check email elena: " + isEmailAlreadyUsed("elena@yahoo.com"));
     }
 
     // Update is called once per frame
@@ -333,5 +339,48 @@ public class DB : MonoBehaviour{
         }
 
         return lastID;
+    }
+
+
+    //checks for constraint violations
+    //can this be done in only one function/in a better way?
+    public bool isUsernameAlreadyUsed(string text){
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT username FROM Users WHERE username = '" + text + "' ;";
+                IDataReader usersReader = query.ExecuteReader();
+                if(usersReader["username"] != DBNull.Value){
+                    Debug.Log("Username: " + usersReader["username"] + " already exists in the database.\n");
+                    return true;
+                }
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return false;
+    }
+
+    public bool isEmailAlreadyUsed(string text){
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT email FROM Users WHERE email = '" + text + "' ;";
+                IDataReader usersReader = query.ExecuteReader();
+                if(usersReader["email"] != DBNull.Value){
+                    Debug.Log("Email address: " + usersReader["email"] + " already exists in the database.\n");
+                    return true;
+                }
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return false;
     }
 }
