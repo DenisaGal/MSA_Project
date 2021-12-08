@@ -11,6 +11,7 @@ public class Register : MonoBehaviour
 	public InputField confirmPassword;
 
 	DB pianoDB;
+	PopUp pop;
 	//EncryptPassword hashPassword;
 
     // Start is called before the first frame update
@@ -18,6 +19,8 @@ public class Register : MonoBehaviour
     {
     	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
         pianoDB.CreatePianoDB();
+
+        pop = GameObject.FindGameObjectWithTag("PopUpSystem").GetComponent<PopUp>();
 
         //hashPassword = GameObject.FindGameObjectWithTag("Encrypt").GetComponent<EncryptPassword>();
     }
@@ -46,6 +49,9 @@ public class Register : MonoBehaviour
     	//checks for email
     	if(string.IsNullOrEmpty(email.text)){
     		Debug.Log("Email address field is mandatory.\n"); //should be a pop up
+
+    		pop.popUp("Email address field is mandatory.");
+
     		return true;
     	}
     	//is there any better way to do this???? how to check if email address is valid?
