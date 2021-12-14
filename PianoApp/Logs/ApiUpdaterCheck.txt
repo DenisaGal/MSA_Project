@@ -224,3 +224,13 @@ C# parse time         : 1510ms
 candidates check time : 98ms
 console write time    : 14ms
 
+[api-updater (non-obsolete-error-filter)] 14.12.2021 14:56:47 : Starting D:/Deni/Programs/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 4421,0692ms
+moved types parse time: 65ms
+candidates parse time : 1ms
+C# parse time         : 263ms
+candidates check time : 34ms
+console write time    : 0ms
+
