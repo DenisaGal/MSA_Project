@@ -18,7 +18,7 @@ public class DB : MonoBehaviour{
         //testing the fuctions below
 
         //A lot of field values have to be unique (see constraints). To avoid errors please check the db before uncommenting
-        AddUser(0, "abc", "abc", "abc");
+        /*AddUser(0, "abc", "abc", "abc");
         AddLesson(0, "abc", 5, 5);
         AddPianoKey(0, "abc", "abc", 5);
 
@@ -28,22 +28,24 @@ public class DB : MonoBehaviour{
 
         getUserByID(0);
         getLessosnByID(0);
-        getPianoKeysByID(0);
+        getPianoKeysByID(0);*/
 
         //comment this if you want to actually see the values in the db
-        DeleteUser(0);
+        /*DeleteUser(0);
         DeleteLesson(0);
-        DeletePianoKey(0);
+        DeletePianoKey(0);*/
 
-        Debug.Log("Last user ID: " + getLastUserID() + ".\n");
-        Debug.Log("Last lesson ID: " + getLastLessonID() + ".\n");
-        Debug.Log("Last key ID: " + getLastKeyID() + ".\n");
+        // Debug.Log("Last user ID: " + getLastUserID() + ".\n");
+        // Debug.Log("Last lesson ID: " + getLastLessonID() + ".\n");
+        // Debug.Log("Last key ID: " + getLastKeyID() + ".\n");
 
-        Debug.Log("Check username ana: " + isUsernameAlreadyUsed("ana"));
-        Debug.Log("Check username elena: " + isUsernameAlreadyUsed("elena"));
+        // Debug.Log("Check username ana: " + isUsernameAlreadyUsed("ana"));
+        // Debug.Log("Check username elena: " + isUsernameAlreadyUsed("elena"));
 
-        Debug.Log("Check email ana: " + isEmailAlreadyUsed("ana@yahoo.com"));
-        Debug.Log("Check email elena: " + isEmailAlreadyUsed("elena@yahoo.com"));
+        // Debug.Log("Check email ana: " + isEmailAlreadyUsed("ana@yahoo.com"));
+        // Debug.Log("Check email elena: " + isEmailAlreadyUsed("elena@yahoo.com"));
+
+        //Debug.Log("Check password for test: " + isPasswordCorrect("test", EncryptPassword.HashString("test")));
     }
 
     // Update is called once per frame
@@ -374,6 +376,28 @@ public class DB : MonoBehaviour{
                 if(usersReader["email"] != DBNull.Value){
                     Debug.Log("Email address: " + usersReader["email"] + " already exists in the database.\n");
                     return true;
+                }
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return false;
+    }
+
+    public bool isPasswordCorrect(string username, string password){
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT hashedPwd FROM Users WHERE username = '" + username + "' ;";
+                IDataReader usersReader = query.ExecuteReader();
+                if(usersReader["hashedPwd"] != DBNull.Value){
+                    if(string.Equals(password, usersReader["hashedPwd"])){
+                        Debug.Log("Password is correct.\n");
+                        return true;
+                    }
                 }
                 usersReader.Close();
             }
