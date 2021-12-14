@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Register : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class Register : MonoBehaviour
 	    	if(string.Equals(password.text, confirmPassword.text)){
 	    		pianoDB.AddUser(pianoDB.getLastUserID() + 1, email.text, username.text, EncryptPassword.HashString(password.text));
 	    		Debug.Log("User added.\n");
+	    		SceneManager.LoadScene("LoginScene");
 	    	}
 	    	else{
 	    		pop.popUp("Passwords did not match!\nPlease try again.");
@@ -96,5 +98,9 @@ public class Register : MonoBehaviour
 
     	//if it got here => all is good
     	return true;
+    }
+
+    public void AlredyHasAccount(){
+    	SceneManager.LoadScene("LoginScene");
     }
 }
