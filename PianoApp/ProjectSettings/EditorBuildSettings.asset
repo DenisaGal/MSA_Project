@@ -14,4 +14,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoginScene.unity
     guid: 42ca7e012f575b24aa89a8172c97e8c0
+  - enabled: 1
+    path: Assets/Scenes/Lesson1.2Scene.unity
+    guid: d183fc1f26a2efb419889589db5c717e
+  - enabled: 1
+    path: Assets/Scenes/Lesson1KeyboardScene.unity
+    guid: e35a80b703a1a134790e79cd415f7f41
+  - enabled: 1
+    path: Assets/Scenes/Lesson1Scene.unity
+    guid: e53927dd56ec6a9459285f593bcfd6db
+  - enabled: 1
+    path: Assets/Scenes/Lesson2.2Scene.unity
+    guid: 0e4a3f7836ce8de44a3442f92f7034bb
+  - enabled: 1
+    path: Assets/Scenes/Lesson2KeyboardScene.unity
+    guid: 80fa6ceebd1c5a0488a8b872291bb3f9
+  - enabled: 1
+    path: Assets/Scenes/Lesson2Scene.unity
+    guid: 0f40efd3d15366c43bb0cb692838004f
+  - enabled: 1
+    path: Assets/Scenes/Quiz1.2Scene.unity
+    guid: cd9ea86df024e1447bfde735ce3f074c
+  - enabled: 1
+    path: Assets/Scenes/Quiz1.3Scene.unity
+    guid: 191470d9c51997844bc1245805579ad5
+  - enabled: 1
+    path: Assets/Scenes/Quiz1Scene.unity
+    guid: bfc9382050afafa4cb3389c216988687
   m_configObjects: {}

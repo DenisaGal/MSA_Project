@@ -28,10 +28,16 @@ public class Login : MonoBehaviour
     }
 
     public void LoginUser(){
-        if(pianoDB.isUsernameAlreadyUsed(username.text) && pianoDB.isPasswordCorrect(EncryptPassword.HashString(password.text))){
+        if(string.IsNullOrEmpty(username.text)){
+            pop.popUp("Username field is mandatory.");
+        }
+        else if(string.IsNullOrEmpty(password.text)){
+            pop.popUp("Password field is mandatory.");
+        }
+        else if(pianoDB.isUsernameAlreadyUsed(username.text) && pianoDB.isPasswordCorrect(username.text, EncryptPassword.HashString(password.text))){
             SceneManager.LoadScene("Lesson1Scene"); //Should be main scene!!!! But we do not have it yet
         }
-        else if(pianoDB.isUsernameAlreadyUsed(username.text) && !pianoDB.isPasswordCorrect(EncryptPassword.HashString(password.text))){
+        else if(pianoDB.isUsernameAlreadyUsed(username.text) && !pianoDB.isPasswordCorrect(username.text, EncryptPassword.HashString(password.text))){
             pop.popUp("Wrong password!\nPlease try again.");
         }
         else if(!pianoDB.isUsernameAlreadyUsed(username.text)){
