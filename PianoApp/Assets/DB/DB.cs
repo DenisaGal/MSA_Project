@@ -442,7 +442,7 @@ public class DB : MonoBehaviour{
                 query.CommandText = "SELECT title FROM Lessons WHERE lessonID = " + lessonID + ";";
                 IDataReader lessonsReader = query.ExecuteReader();
                 if(lessonsReader["title"] != DBNull.Value){
-                    lessonName = Convert.ToString(lessonsReader["numberOfLessons"]);
+                    lessonName = Convert.ToString(lessonsReader["title"]);
                 }
                 else{
                     Debug.Log("Lessons table is empty\n");
