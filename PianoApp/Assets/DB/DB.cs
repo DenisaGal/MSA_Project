@@ -418,8 +418,8 @@ public class DB : MonoBehaviour{
                 query.CommandText = "SELECT COUNT(lessonID) AS numberOfLessons FROM Lessons;";
                 IDataReader lessonsReader = query.ExecuteReader();
                 if(lessonsReader["numberOfLessons"] != DBNull.Value){
-                    lastID = Convert.ToInt32(lessonsReader["numberOfLessons"]);
-                }I
+                    numberOfLessons = Convert.ToInt32(lessonsReader["numberOfLessons"]);
+                }
                 else{
                     Debug.Log("Lessons table is empty\n");
                 }
@@ -443,7 +443,7 @@ public class DB : MonoBehaviour{
                 IDataReader lessonsReader = query.ExecuteReader();
                 if(lessonsReader["title"] != DBNull.Value){
                     lessonName = Convert.ToString(lessonsReader["numberOfLessons"]);
-                }I
+                }
                 else{
                     Debug.Log("Lessons table is empty\n");
                 }
