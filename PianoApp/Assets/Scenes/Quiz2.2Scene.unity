@@ -1715,7 +1715,7 @@ MonoBehaviour:
     answer: Do
   result: {fileID: 1807224022}
   delay: 2
-  nextScene: Quiz1.3Scene
+  nextScene: Quiz2.3Scene
 --- !u!4 &406209466
 Transform:
   m_ObjectHideFlags: 0
