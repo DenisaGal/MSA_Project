@@ -11,10 +11,15 @@ public class LessonController : MonoBehaviour
 	[SerializeField]
 	private Button[] lessons;
 
+	DB pianoDB;
+
     // Start is called before the first frame update
     void Start()
     {
+    	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
+
         InitializeLessons();
+        LoadLessons();
     }
 
     // Update is called once per frame
@@ -31,7 +36,7 @@ public class LessonController : MonoBehaviour
     		}
 
     		lessons[i].gameObject.SetActive(true);
-    		lessons[i].GetComponentInChildren<Text>().text = pianoDB.lessonName();
+    		lessons[i].GetComponentInChildren<Text>().text = pianoDB.getLessonNameByID(i);
     	}
     }
 
@@ -46,5 +51,7 @@ public class LessonController : MonoBehaviour
 
     private void GoToLesson(int lessonIndex){
     	Debug.Log("To be implemented");
+    	//this should redirect to the lesson with index lessonIndex
+    	//!!!!!!!!!lessonName/title should be the name of the scene!!!!!!!!!
     }
 }
