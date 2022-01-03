@@ -407,4 +407,52 @@ public class DB : MonoBehaviour{
 
         return false;
     }
+
+    public int getNumberOfLessons(){
+        int numberOfLessons = 0;
+
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT COUNT(lessonID) AS numberOfLessons FROM Lessons;";
+                IDataReader lessonsReader = query.ExecuteReader();
+                if(lessonsReader["numberOfLessons"] != DBNull.Value){
+                    numberOfLessons = Convert.ToInt32(lessonsReader["numberOfLessons"]);
+                }
+                else{
+                    Debug.Log("Lessons table is empty\n");
+                }
+                lessonsReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return numberOfLessons;
+    }
+
+    public string getLessonNameByID(int lessonID){
+        string lessonName = "";
+
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT title FROM Lessons WHERE lessonID = " + lessonID + ";";
+                IDataReader lessonsReader = query.ExecuteReader();
+                if(lessonsReader["title"] != DBNull.Value){
+                    lessonName = Convert.ToString(lessonsReader["title"]);
+                }
+                else{
+                    Debug.Log("Lessons table is empty\n");
+                }
+                lessonsReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return lessonName;
+    }
 }
