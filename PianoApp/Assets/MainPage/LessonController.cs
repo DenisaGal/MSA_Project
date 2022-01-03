@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //source https://www.youtube.com/watch?v=WX-5NQHmhVc
 
@@ -36,7 +37,7 @@ public class LessonController : MonoBehaviour
     		}
 
     		lessons[i].gameObject.SetActive(true);
-    		lessons[i].GetComponentInChildren<Text>().text = pianoDB.getLessonNameByID(i);
+    		lessons[i].GetComponentInChildren<Text>().text = pianoDB.getLessonNameByID(i).Replace("Scene", "");
     	}
     }
 
@@ -50,8 +51,13 @@ public class LessonController : MonoBehaviour
     }
 
     private void GoToLesson(int lessonIndex){
-    	Debug.Log("To be implemented");
-    	//this should redirect to the lesson with index lessonIndex
-    	//!!!!!!!!!lessonName/title should be the name of the scene!!!!!!!!!
+    	//Debug.Log("To be implemented");
+    	SceneManager.LoadScene(pianoDB.getLessonNameByID(lessonIndex));
+    }
+
+    public void randomSong(){
+        //add more songs and assign a random one
+        //should be called from update()?
+        SceneManager.LoadScene("Song1Scene");
     }
 }
