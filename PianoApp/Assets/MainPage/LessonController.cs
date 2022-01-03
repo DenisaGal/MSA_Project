@@ -54,4 +54,10 @@ public class LessonController : MonoBehaviour
     	//Debug.Log("To be implemented");
     	SceneManager.LoadScene(pianoDB.getLessonNameByID(lessonIndex));
     }
+
+    public void randomSong(){
+        //add more songs and assign a random one
+        //should be called from update()?
+        SceneManager.LoadScene("Song1Scene");
+    }
 }
