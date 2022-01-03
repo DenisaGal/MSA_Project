@@ -25,9 +25,9 @@ public class XP : MonoBehaviour
     }
 
     public bool unlockLesson(int lessonID){
-    	if(pianoDB.getUserXP(userID) >= pianoDB.getLessonReqXP(lessonID)){
+    	/*if(pianoDB.getUserXP(userID) >= pianoDB.getLessonReqXP(lessonID)){
     		return true;
-    	}
+    	}*/
     	return false;
     }
 }
