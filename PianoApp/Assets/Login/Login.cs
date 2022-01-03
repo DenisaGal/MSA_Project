@@ -9,6 +9,8 @@ public class Login : MonoBehaviour
 	public InputField username;
 	public InputField password;
 
+    public string currentUsername;
+
     DB pianoDB;
     PopUp pop;
 
@@ -35,6 +37,7 @@ public class Login : MonoBehaviour
             pop.popUp("Password field is mandatory.");
         }
         else if(pianoDB.isUsernameAlreadyUsed(username.text) && pianoDB.isPasswordCorrect(username.text, EncryptPassword.HashString(password.text))){
+            setCurrentUsername(username.text);
             SceneManager.LoadScene("MainPage");
         }
         else if(pianoDB.isUsernameAlreadyUsed(username.text) && !pianoDB.isPasswordCorrect(username.text, EncryptPassword.HashString(password.text))){
@@ -57,5 +60,17 @@ public class Login : MonoBehaviour
         //How should I implement this??????
         pop.popUp("To be implemented");
         //SceneManager.LoadScene("ForgotPasswordScene");//????????
+    }
+
+    public void setCurrentUsername(string name){
+        currentUsername = name;
+    }
+
+    public string setCurrentUsername(){
+        return currentUsername;
+    }
+
+    public int getCurrentUserID(){
+        return pianoDB.getUserByUsername(currentUsername);
     }
 }
