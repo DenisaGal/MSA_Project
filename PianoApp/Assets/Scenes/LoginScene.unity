@@ -1222,6 +1222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   username: {fileID: 597035105}
   password: {fileID: 728570689}
+  currentUsername: 
 --- !u!1 &826382354
 GameObject:
   m_ObjectHideFlags: 0
