@@ -8,7 +8,7 @@ TagManager:
   - Encrypt
   - PopUpSystem
   - Login
-  - XP
+  - PXP
   layers:
   - Default
   - TransparentFX
