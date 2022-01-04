@@ -18,8 +18,7 @@ public class Login : MonoBehaviour
     void Start()
     {
         pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
-        pianoDB.CreatePianoDB();
-
+        
         pop = GameObject.FindGameObjectWithTag("PopUpSystem").GetComponent<PopUp>();
     }
 
