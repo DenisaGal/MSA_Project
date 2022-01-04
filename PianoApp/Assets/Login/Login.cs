@@ -9,7 +9,7 @@ public class Login : MonoBehaviour
 	public InputField username;
 	public InputField password;
 
-    public string currentUsername;
+    public static string currentUsername;
 
     DB pianoDB;
     PopUp pop;
@@ -66,7 +66,7 @@ public class Login : MonoBehaviour
         currentUsername = name;
     }
 
-    public string setCurrentUsername(){
+    public string getCurrentUsername(){
         return currentUsername;
     }
 
