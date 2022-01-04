@@ -44,4 +44,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainPage.unity
     guid: d6d2bd94da106a04a9a5c205f70d28eb
+  - enabled: 1
+    path: Assets/Scenes/Song1Scene.unity
+    guid: 01158535029ec87408f794d4e984a61f
+  - enabled: 1
+    path: Assets/Scenes/Quiz2.2Scene.unity
+    guid: a0d641ebe8cdb0144bacf69dd21b0992
+  - enabled: 1
+    path: Assets/Scenes/Quiz2.3Scene.unity
+    guid: 60b2c68c504cc4f4d9df8357b77076df
+  - enabled: 1
+    path: Assets/Scenes/Quiz2Scene.unity
+    guid: e38822639fff85848bd813ee2550fdac
+  - enabled: 1
+    path: Assets/Scenes/Song2Scene.unity
+    guid: 44ea7b7bb7b8b53448de80b086c0b08c
   m_configObjects: {}
