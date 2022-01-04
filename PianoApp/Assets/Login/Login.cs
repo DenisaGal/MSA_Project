@@ -71,6 +71,6 @@ public class Login : MonoBehaviour
     }
 
     public int getCurrentUserID(){
-        return pianoDB.getUserByUsername(currentUsername);
+        return pianoDB.getUserIDByUsername(currentUsername);
     }
 }
