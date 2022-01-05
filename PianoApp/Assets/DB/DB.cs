@@ -46,6 +46,14 @@ public class DB : MonoBehaviour{
         // Debug.Log("Check email elena: " + isEmailAlreadyUsed("elena@yahoo.com"));
 
         //Debug.Log("Check password for test: " + isPasswordCorrect("test", EncryptPassword.HashString("test")));
+
+        // Debug.Log("Get id for anaMere: " + getUserIDByUsername("T_T"));
+        // Debug.Log("Get xp by id for anaMere: " + getUserXP(8));
+        // Debug.Log("Get xp by username for anaMere: " + getUserXP("anaMere"));
+        // Debug.Log("Get xp by id for anaMere: " + getUserLevel(8));
+        // Debug.Log("Get xp by username for anaMere: " + getUserLevel("anaMere"));
+        // Debug.Log("Get xp by id for anaMere: " + getLessonRequiredLevel(2));
+        // Debug.Log("Get xp by username for Lesson2Scene: " + getLessonRequiredLevel("Lesson2Scene"));
     }
 
     // Update is called once per frame
@@ -454,5 +462,133 @@ public class DB : MonoBehaviour{
         }
 
         return lessonName;
+    }
+
+    public int getUserIDByUsername(string username){
+        int id;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT userID FROM Users WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                id = Convert.ToInt32(usersReader["userID"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return id;
+    }
+
+    public int getUserXP(int userID){
+        int xp;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT xp FROM Users WHERE userID = " + userID + ";";
+                IDataReader usersReader = query.ExecuteReader();
+                xp = Convert.ToInt32(usersReader["xp"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return xp;
+    }
+
+    public int getUserXP(string username){
+        int xp;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT xp FROM Users WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                xp = Convert.ToInt32(usersReader["xp"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return xp;
+    }
+
+    public int getUserLevel(int userID){
+        int level;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT level FROM Users WHERE userID = " + userID + ";";
+                IDataReader usersReader = query.ExecuteReader();
+                level = Convert.ToInt32(usersReader["level"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return level;
+    }
+
+    public int getUserLevel(string username){
+        int level;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT level FROM Users WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                level = Convert.ToInt32(usersReader["level"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return level;
+    }
+
+    public int getLessonRequiredLevel(int lessonID){
+        int requiredLevel;
+
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT requiredLevel FROM Lessons WHERE lessonID = " + lessonID + ";";
+                IDataReader lessonsReader = query.ExecuteReader();
+                requiredLevel = Convert.ToInt32(lessonsReader["requiredLevel"]);
+                lessonsReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return requiredLevel;
+    }
+
+    public int getLessonRequiredLevel(string title){
+        int requiredLevel;
+
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT requiredLevel FROM Lessons WHERE title = '" + title + "';";
+                IDataReader lessonsReader = query.ExecuteReader();
+                requiredLevel = Convert.ToInt32(lessonsReader["requiredLevel"]);
+                lessonsReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return requiredLevel;
     }
 }
