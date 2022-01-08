@@ -595,6 +595,7 @@ public class DB : MonoBehaviour{
         return requiredLevel;
     }
 
+    //adds xp points to existing user xp
     public void addXP(string username, int xp){
         int currentXP = getUserXP(username);
         int updatedXP = currentXP + xp;
@@ -603,6 +604,21 @@ public class DB : MonoBehaviour{
 
             using(var query = connectionToDB.CreateCommand()){
                 query.CommandText = "UPDATE Users SET xp = " + updatedXP + " WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+    }
+
+    //updates/changes the current user xp with the value of newXP
+    public void updateXP(string username, int newXP){
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "UPDATE Users SET xp = " + newXP + " WHERE username = '" + username + "';";
                 IDataReader usersReader = query.ExecuteReader();
                 usersReader.Close();
             }
