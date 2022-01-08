@@ -54,6 +54,10 @@ public class DB : MonoBehaviour{
         // Debug.Log("Get xp by username for anaMere: " + getUserLevel("anaMere"));
         // Debug.Log("Get xp by id for anaMere: " + getLessonRequiredLevel(2));
         // Debug.Log("Get xp by username for Lesson2Scene: " + getLessonRequiredLevel("Lesson2Scene"));
+        // Debug.Log("Streak by id for deni" + getUserStreak(12));
+        // Debug.Log("Streak by id for yey" + getUserStreak(10));
+        // Debug.Log("Streak by username for deni" + getUserStreak("deni"));
+        // Debug.Log("Streak by username for yey" + getUserStreak("yey"));
 
         //addXP("deni", 5);
         //levelUp("deni");
@@ -365,7 +369,7 @@ public class DB : MonoBehaviour{
                 query.CommandText = "SELECT username FROM Users WHERE username = '" + text + "' ;";
                 IDataReader usersReader = query.ExecuteReader();
                 if(usersReader["username"] != DBNull.Value){
-                    Debug.Log("Username: " + usersReader["username"] + " already exists in the database.\n");
+                    //Debug.Log("Username: " + usersReader["username"] + " already exists in the database.\n");
                     return true;
                 }
                 usersReader.Close();
@@ -385,7 +389,7 @@ public class DB : MonoBehaviour{
                 query.CommandText = "SELECT email FROM Users WHERE email = '" + text + "' ;";
                 IDataReader usersReader = query.ExecuteReader();
                 if(usersReader["email"] != DBNull.Value){
-                    Debug.Log("Email address: " + usersReader["email"] + " already exists in the database.\n");
+                    //Debug.Log("Email address: " + usersReader["email"] + " already exists in the database.\n");
                     return true;
                 }
                 usersReader.Close();
@@ -406,7 +410,7 @@ public class DB : MonoBehaviour{
                 IDataReader usersReader = query.ExecuteReader();
                 if(usersReader["hashedPwd"] != DBNull.Value){
                     if(string.Equals(password, usersReader["hashedPwd"])){
-                        Debug.Log("Password is correct.\n");
+                        //Debug.Log("Password is correct.\n");
                         return true;
                     }
                 }
@@ -555,6 +559,42 @@ public class DB : MonoBehaviour{
         }
 
         return level;
+    }
+
+    public int getUserStreak(int userID){
+        int streak;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT streak FROM Users WHERE userID = " + userID + ";";
+                IDataReader usersReader = query.ExecuteReader();
+                streak = Convert.ToInt32(usersReader["streak"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return streak;
+    }
+
+    public int getUserStreak(string username){
+        int streak;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT streak FROM Users WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                streak = Convert.ToInt32(usersReader["streak"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return streak;
     }
 
     public int getLessonRequiredLevel(int lessonID){
