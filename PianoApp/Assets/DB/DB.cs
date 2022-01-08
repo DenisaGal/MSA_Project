@@ -61,6 +61,8 @@ public class DB : MonoBehaviour{
 
         //addXP("deni", 5);
         //levelUp("deni");
+        //streakUp("user");
+        //resetStreak("user");
     }
 
     // Update is called once per frame
@@ -674,6 +676,35 @@ public class DB : MonoBehaviour{
 
             using(var query = connectionToDB.CreateCommand()){
                 query.CommandText = "UPDATE Users SET level = " + level + " WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+    }
+
+    public void resetStreak(string username){
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "UPDATE Users SET streak = 0 WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+    }
+
+    public void streakUp(string username){
+        int streak = getUserStreak(username) + 1;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "UPDATE Users SET streak = " + streak + " WHERE username = '" + username + "';";
                 IDataReader usersReader = query.ExecuteReader();
                 usersReader.Close();
             }
