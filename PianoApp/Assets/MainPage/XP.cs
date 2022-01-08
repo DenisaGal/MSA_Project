@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //https://www.youtube.com/watch?v=z0WpUwkvkOM
 
 public class XP : MonoBehaviour
 {
-	private int xpPerLvl; //should increase as the player levels up
+	private float xpPerLvl = 20; //should increase as the player levels up
 
     DB pianoDB;
+
+    public Image XPBar;
 
     // Start is called before the first frame update
     void Start()
     {
     	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();   
-    	xpPerLvl = 5;
+    	//xpPerLvl = 20;
+        showXP();
     }
 
     // Update is called once per frame
@@ -30,5 +34,9 @@ public class XP : MonoBehaviour
     		return false;
     	}
     	return true;
+    }
+
+    public void showXP(){
+        XPBar.fillAmount = (float)pianoDB.getUserXP(Login.currentUsername)/xpPerLvl;
     }
 }
