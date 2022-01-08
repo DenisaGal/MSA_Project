@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 //https://www.youtube.com/watch?v=z0WpUwkvkOM
 
@@ -12,6 +13,7 @@ public class XP : MonoBehaviour
     DB pianoDB;
 
     public Image XPBar;
+    public Text level;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class XP : MonoBehaviour
     	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();   
     	//xpPerLevel = 20;
         showXP();
+        showLevel();
     }
 
     // Update is called once per frame
@@ -46,7 +49,10 @@ public class XP : MonoBehaviour
         }
 
         XPBar.fillAmount = (float)userXP/xpPerLevel;
+ 
+    }
 
-        
+    public void showLevel(){
+        level.text = Convert.ToString(pianoDB.getUserLevel(Login.currentUsername));
     }
 }
