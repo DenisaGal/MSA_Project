@@ -54,6 +54,9 @@ public class DB : MonoBehaviour{
         // Debug.Log("Get xp by username for anaMere: " + getUserLevel("anaMere"));
         // Debug.Log("Get xp by id for anaMere: " + getLessonRequiredLevel(2));
         // Debug.Log("Get xp by username for Lesson2Scene: " + getLessonRequiredLevel("Lesson2Scene"));
+
+        //addXP("deni", 5);
+        //levelUp("deni");
     }
 
     // Update is called once per frame
@@ -590,5 +593,36 @@ public class DB : MonoBehaviour{
         }
 
         return requiredLevel;
+    }
+
+    public void addXP(string username, int xp){
+        int currentXP = getUserXP(username);
+        int updatedXP = currentXP + xp;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "UPDATE Users SET xp = " + updatedXP + " WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+    }
+
+    public void levelUp(string username){
+        int level = getUserLevel(username) + 1;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "UPDATE Users SET level = " + level + " WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
     }
 }
