@@ -6,16 +6,15 @@ using UnityEngine;
 
 public class XP : MonoBehaviour
 {
-	public int xpPerLvl; //should increase as the player levels up
+	private int xpPerLvl; //should increase as the player levels up
 
     DB pianoDB;
 
     // Start is called before the first frame update
     void Start()
     {
-    	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
-
-        
+    	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();   
+    	xpPerLvl = 5;
     }
 
     // Update is called once per frame
@@ -24,10 +23,12 @@ public class XP : MonoBehaviour
         
     }
 
-    public bool unlockLesson(int lessonID){
-    	/*if(pianoDB.getUserXP(userID) >= pianoDB.getLessonReqXP(lessonID)){
-    		return true;
-    	}*/
-    	return false;
+    public bool lockLesson(int lessonID){
+    	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
+    	//need to figure out how to get the total user xp taking into account the level as well
+    	if(pianoDB.getUserXP(Login.currentUsername) >= pianoDB.getLessonRequiredLevel(lessonID)){
+    		return false;
+    	}
+    	return true;
     }
 }
