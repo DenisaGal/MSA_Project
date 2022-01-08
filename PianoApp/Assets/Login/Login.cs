@@ -9,7 +9,7 @@ public class Login : MonoBehaviour
 	public InputField username;
 	public InputField password;
 
-    public string currentUsername;
+    public static string currentUsername;
 
     DB pianoDB;
     PopUp pop;
@@ -18,8 +18,7 @@ public class Login : MonoBehaviour
     void Start()
     {
         pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
-        pianoDB.CreatePianoDB();
-
+        
         pop = GameObject.FindGameObjectWithTag("PopUpSystem").GetComponent<PopUp>();
     }
 
@@ -66,11 +65,11 @@ public class Login : MonoBehaviour
         currentUsername = name;
     }
 
-    public string setCurrentUsername(){
+    public string getCurrentUsername(){
         return currentUsername;
     }
 
     public int getCurrentUserID(){
-        return pianoDB.getUserByUsername(currentUsername);
+        return pianoDB.getUserIDByUsername(currentUsername);
     }
 }
