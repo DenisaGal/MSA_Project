@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class XP : MonoBehaviour
 {
-	private int xpPerLevel; //should increase as the player levels up
+	private int xpPerLevel = 20; //should increase as the player levels up
 
     DB pianoDB;
 
@@ -17,7 +17,7 @@ public class XP : MonoBehaviour
     void Start()
     {
     	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();   
-    	xpPerLevel = 15;
+    	//xpPerLevel = 20;
         showXP();
     }
 
@@ -29,8 +29,8 @@ public class XP : MonoBehaviour
 
     public bool lockLesson(int lessonID){
     	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
-    	//int totalUserXP = pianoDB.getUserXP(Login.currentUsername) + pianoDB.getUserLevel(Login.currentUsername) * xpPerLevel; 
-    	if(pianoDB.getUserXP(Login.currentUsername) >= pianoDB.getLessonRequiredLevel(lessonID)){
+    	int totalUserXP = pianoDB.getUserXP(Login.currentUsername) + pianoDB.getUserLevel(Login.currentUsername) * xpPerLevel;
+    	if(totalUserXP >= pianoDB.getLessonRequiredLevel(lessonID)){
     		return false;
     	}
     	return true;
@@ -42,7 +42,7 @@ public class XP : MonoBehaviour
         if(userXP >= xpPerLevel){
             pianoDB.levelUp(Login.currentUsername);
             userXP = userXP - xpPerLevel;
-            //pianoDB.updateUserXP(Login.currentUsername);
+            pianoDB.updateXP(Login.currentUsername, userXP);
         }
 
         XPBar.fillAmount = (float)userXP/xpPerLevel;
