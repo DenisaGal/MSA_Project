@@ -25,7 +25,6 @@ public class Streak : MonoBehaviour
     }
 
     public void showStreak(){
-    	streak.text = "5";
-        //streak.text = Convert.ToString(pianoDB.getUserStreak(Login.currentUsername));
+        streak.text = Convert.ToString(pianoDB.getUserStreak(Login.currentUsername));
     }
 }

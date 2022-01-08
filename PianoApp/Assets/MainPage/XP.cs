@@ -32,7 +32,7 @@ public class XP : MonoBehaviour
 
     public bool lockLesson(int lessonID){
     	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
-    	int totalUserXP = pianoDB.getUserXP(Login.currentUsername) + pianoDB.getUserLevel(Login.currentUsername) * xpPerLevel;
+    	int totalUserXP = pianoDB.getUserXP(Login.currentUsername) + (spianoDB.getUserLevel(Login.currentUsername) - 1) * xpPerLevel;
     	if(totalUserXP >= pianoDB.getLessonRequiredLevel(lessonID)){
     		return false;
     	}
