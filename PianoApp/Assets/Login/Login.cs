@@ -17,13 +17,6 @@ public class Login : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
-<<<<<<< HEAD
-        //pianoDB.CreatePianoDB();
-
-=======
-        
->>>>>>> login
         pop = GameObject.FindGameObjectWithTag("PopUpSystem").GetComponent<PopUp>();
     }
 
