@@ -22,7 +22,7 @@ public class LessonController : MonoBehaviour
     void Start()
     {
     	pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
-        xpController = GameObject.FindGameObjectWithTag("XP").GetComponent<XP>();
+        xpController = GameObject.FindGameObjectWithTag("PXP").GetComponent<XP>();
 
         InitializeLessons();
         LoadLessons();
@@ -44,7 +44,7 @@ public class LessonController : MonoBehaviour
 
     		lessons[i].gameObject.SetActive(true);
     		lessons[i].GetComponentInChildren<Text>().text = pianoDB.getLessonNameByID(i).Replace("Scene", "");
-            lessonsLocks[i].gameObject.SetActive(xpController.unlockLesson(i));
+            lessonsLocks[i].gameObject.SetActive(xpController.lockLesson(i));
     	}
     }
 
@@ -65,5 +65,6 @@ public class LessonController : MonoBehaviour
         //add more songs and assign a random one
         //should be called from update()?
         SceneManager.LoadScene("Song1Scene");
+        //pianoDB.addXP(Login.currentUsername, 5); //for testing purposes; user should get xp for this, but based on how well he played
     }
 }

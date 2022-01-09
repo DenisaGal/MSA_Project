@@ -54,6 +54,13 @@ public class DB : MonoBehaviour{
         // Debug.Log("Get xp by username for anaMere: " + getUserLevel("anaMere"));
         // Debug.Log("Get xp by id for anaMere: " + getLessonRequiredLevel(2));
         // Debug.Log("Get xp by username for Lesson2Scene: " + getLessonRequiredLevel("Lesson2Scene"));
+        // Debug.Log("Streak by id for deni" + getUserStreak(12));
+        // Debug.Log("Streak by id for yey" + getUserStreak(10));
+        // Debug.Log("Streak by username for deni" + getUserStreak("deni"));
+        // Debug.Log("Streak by username for yey" + getUserStreak("yey"));
+
+        //addXP("deni", 5);
+        //levelUp("deni");
     }
 
     // Update is called once per frame
@@ -67,7 +74,7 @@ public class DB : MonoBehaviour{
             connectionToDB.Open();
 
             using(var query = connectionToDB.CreateCommand()){
-                query.CommandText = "CREATE TABLE IF NOT EXISTS Users (userID INTEGER PRIMARY KEY UNIQUE NOT NULL, email STRING NOT NULL UNIQUE, username STRING UNIQUE NOT NULL, hashedPwd STRING NOT NULL, xp INTEGER DEFAULT (0), streak INTEGER DEFAULT (0), level INTEGER DEFAULT (0));";
+                query.CommandText = "CREATE TABLE IF NOT EXISTS Users (userID INTEGER PRIMARY KEY UNIQUE NOT NULL, email STRING NOT NULL UNIQUE, username STRING UNIQUE NOT NULL, hashedPwd STRING NOT NULL, xp INTEGER DEFAULT (5), streak INTEGER DEFAULT (0), level INTEGER DEFAULT (1));";
                 query.ExecuteNonQuery();
 
                 //query.CommandText = "CREATE TABLE IF NOT EXISTS PianoKey (keyID INTEGER PRIMARY KEY NOT NULL UNIQUE, note STRING  NOT NULL, tone STRING NOT NULL, sound BLOB NOT NULL, scale INTEGER NOT NULL);";
@@ -362,7 +369,7 @@ public class DB : MonoBehaviour{
                 query.CommandText = "SELECT username FROM Users WHERE username = '" + text + "' ;";
                 IDataReader usersReader = query.ExecuteReader();
                 if(usersReader["username"] != DBNull.Value){
-                    Debug.Log("Username: " + usersReader["username"] + " already exists in the database.\n");
+                    //Debug.Log("Username: " + usersReader["username"] + " already exists in the database.\n");
                     return true;
                 }
                 usersReader.Close();
@@ -382,7 +389,7 @@ public class DB : MonoBehaviour{
                 query.CommandText = "SELECT email FROM Users WHERE email = '" + text + "' ;";
                 IDataReader usersReader = query.ExecuteReader();
                 if(usersReader["email"] != DBNull.Value){
-                    Debug.Log("Email address: " + usersReader["email"] + " already exists in the database.\n");
+                    //Debug.Log("Email address: " + usersReader["email"] + " already exists in the database.\n");
                     return true;
                 }
                 usersReader.Close();
@@ -403,7 +410,7 @@ public class DB : MonoBehaviour{
                 IDataReader usersReader = query.ExecuteReader();
                 if(usersReader["hashedPwd"] != DBNull.Value){
                     if(string.Equals(password, usersReader["hashedPwd"])){
-                        Debug.Log("Password is correct.\n");
+                        //Debug.Log("Password is correct.\n");
                         return true;
                     }
                 }
@@ -554,6 +561,42 @@ public class DB : MonoBehaviour{
         return level;
     }
 
+    public int getUserStreak(int userID){
+        int streak;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT streak FROM Users WHERE userID = " + userID + ";";
+                IDataReader usersReader = query.ExecuteReader();
+                streak = Convert.ToInt32(usersReader["streak"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return streak;
+    }
+
+    public int getUserStreak(string username){
+        int streak;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT streak FROM Users WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                streak = Convert.ToInt32(usersReader["streak"]);
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return streak;
+    }
+
     public int getLessonRequiredLevel(int lessonID){
         int requiredLevel;
 
@@ -590,5 +633,52 @@ public class DB : MonoBehaviour{
         }
 
         return requiredLevel;
+    }
+
+    //adds xp points to existing user xp
+    public void addXP(string username, int xp){
+        int currentXP = getUserXP(username);
+        int updatedXP = currentXP + xp;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "UPDATE Users SET xp = " + updatedXP + " WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+    }
+
+    //updates/changes the current user xp with the value of newXP
+    public void updateXP(string username, int newXP){
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "UPDATE Users SET xp = " + newXP + " WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+    }
+
+    public void levelUp(string username){
+        int level = getUserLevel(username) + 1;
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "UPDATE Users SET level = " + level + " WHERE username = '" + username + "';";
+                IDataReader usersReader = query.ExecuteReader();
+                usersReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
     }
 }
