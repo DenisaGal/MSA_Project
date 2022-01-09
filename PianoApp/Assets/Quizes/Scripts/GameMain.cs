@@ -15,9 +15,13 @@ public class GameMain : MonoBehaviour
     private static int correctAnswers = 0;
     [SerializeField] private float delay = 2f;
     [SerializeField] private string nextScene;
+
+	DB pianoDB;
     
     void Start()
     {
+		pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
+
         GetRandomQuestion();
         //Debug.Log(currentQuestion.answer);
     }
@@ -45,6 +49,11 @@ public class GameMain : MonoBehaviour
         yield return new WaitForSeconds(delay-0.5f);
 
         currentQuestion.displayedNote.SetActive(false);
+
+		//quiz is completed and u get xp
+		if(nextScene == "MainPage")
+			pianoDB.addXP(Login.currentUsername, 10); //maxXp?
+
         SceneManager.LoadScene(nextScene);
     }
 
@@ -53,7 +62,7 @@ public class GameMain : MonoBehaviour
         //correct answer
         if (userAnswer == currentQuestion.answer){
             result.text = "Correct!"; 
-            //+5xp
+			
             correctAnswers++;
             
             var button = GameObject.FindGameObjectWithTag(userAnswer).GetComponent<Button>();
