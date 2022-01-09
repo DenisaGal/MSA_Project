@@ -7,6 +7,8 @@ TagManager:
   - PDB
   - Encrypt
   - PopUpSystem
+  - Login
+  - XP
   layers:
   - Default
   - TransparentFX
