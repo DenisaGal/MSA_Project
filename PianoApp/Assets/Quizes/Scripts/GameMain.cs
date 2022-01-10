@@ -16,6 +16,8 @@ public class GameMain : MonoBehaviour
     [SerializeField] private float delay = 2f;
     [SerializeField] private string nextScene;
 
+    public string lessonTitle;
+
 	DB pianoDB;
     
     void Start()
@@ -23,6 +25,16 @@ public class GameMain : MonoBehaviour
 		pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
 
         GetRandomQuestion();
+        lessonTitle = SceneManager.GetActiveScene().name;
+        if(lessonTitle.Contains("Lesson")){
+        	lessonTitle = lessonTitle.Substring(0, 7);
+        	lessonTitle = lessonTitle + "Scene";
+        }
+        else if(lessonTitle.Contains("Quiz")){
+        	lessonTitle = lessonTitle.Substring(0, 5);
+        	lessonTitle = lessonTitle + "Scene";
+        }
+        //Debug.Log(lessonTitle);
         //Debug.Log(currentQuestion.answer);
     }
 
@@ -51,8 +63,10 @@ public class GameMain : MonoBehaviour
         currentQuestion.displayedNote.SetActive(false);
 
 		//quiz is completed and u get xp
-		if(nextScene == "MainPage")
-			pianoDB.addXP(Login.currentUsername, 10); //maxXp?
+		if(nextScene == "MainPage"){
+			//Debug.Log("Max xp " + pianoDB.getLessonMaxXP(lessonTitle));
+			pianoDB.addXP(Login.currentUsername, pianoDB.getLessonMaxXP(lessonTitle));
+		}
 
         SceneManager.LoadScene(nextScene);
     }
