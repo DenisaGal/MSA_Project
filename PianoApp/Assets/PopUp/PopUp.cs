@@ -16,4 +16,10 @@ public class PopUp : MonoBehaviour
     	popUpText.text = text;
     	animator.SetTrigger("pop");
     }
+
+    public void popUpYesNo(string text){
+    	popUpBox.SetActive(true);
+    	popUpText.text = text;
+    	animator.SetTrigger("pop");
+    }
 }
