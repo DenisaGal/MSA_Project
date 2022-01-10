@@ -9,6 +9,8 @@ TagManager:
   - PopUpSystem
   - Login
   - PXP
+  - SiFill
+  - LaFill
   layers:
   - Default
   - TransparentFX
