@@ -6149,7 +6149,7 @@ MonoBehaviour:
     answer: Do
   result: {fileID: 355578397}
   delay: 2
-  nextScene: Quiz1.3Scene
+  nextScene: MainPage
 --- !u!4 &1433058380
 Transform:
   m_ObjectHideFlags: 0
