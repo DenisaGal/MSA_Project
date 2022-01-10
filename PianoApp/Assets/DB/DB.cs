@@ -637,6 +637,25 @@ public class DB : MonoBehaviour{
         return requiredLevel;
     }
 
+    public int getLessonMaxXP(string title){
+        int maxXP;
+
+        using(var connectionToDB = new SqliteConnection(dbName)){
+            connectionToDB.Open();
+
+            using(var query = connectionToDB.CreateCommand()){
+                query.CommandText = "SELECT maxXP FROM Lessons WHERE title = '" + title + "';";
+                IDataReader lessonsReader = query.ExecuteReader();
+                maxXP = Convert.ToInt32(lessonsReader["maxXP"]);
+                lessonsReader.Close();
+            }
+
+            connectionToDB.Close();
+        }
+
+        return maxXP;
+    }
+
     //adds xp points to existing user xp
     public void addXP(string username, int xp){
         int currentXP = getUserXP(username);
