@@ -26,4 +26,9 @@ public class ChangeSceneWithButton : MonoBehaviour
         }
 		SceneManager.LoadScene(SceneName);
 	}
+
+    public void GoToNextScene(string SceneName){
+        pianoDB.addXP(Login.currentUsername, 5);
+        SceneManager.LoadScene(SceneName);
+    }
 }
