@@ -65,6 +65,6 @@ public class LessonController : MonoBehaviour
         //add more songs and assign a random one
         //should be called from update()?
         SceneManager.LoadScene("Song1Scene");
-        //pianoDB.addXP(Login.currentUsername, 5); //for testing purposes; user should get xp for this, but based on how well he played
+        pianoDB.addXP(Login.currentUsername, 5); //for testing purposes; user should get xp for this, but based on how well he played
     }
 }
