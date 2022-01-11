@@ -53,6 +53,6 @@ public class XP : MonoBehaviour
     }
 
     public void showLevel(){
-        level.text = Convert.ToString(pianoDB.getUserLevel(Login.currentUsername));
+        level.text = Convert.ToString(pianoDB.getUserLevel(Login.currentUsername)) + " lvl";
     }
 }
