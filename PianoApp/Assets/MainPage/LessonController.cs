@@ -15,6 +15,10 @@ public class LessonController : MonoBehaviour
     [SerializeField]
     private Button[] lessonsLocks;
 
+    //private Button piano;
+    [SerializeField]
+    private Button pianoLock;
+
 	DB pianoDB;
     XP xpController;
 
@@ -26,6 +30,7 @@ public class LessonController : MonoBehaviour
 
         InitializeLessons();
         LoadLessons();
+        unlockPiano();
     }
 
     // Update is called once per frame
@@ -61,9 +66,12 @@ public class LessonController : MonoBehaviour
     	SceneManager.LoadScene(pianoDB.getLessonNameByID(lessonIndex));
     }
 
+    private void unlockPiano(){
+        pianoLock.gameObject.SetActive(xpController.lockPiano());
+    }
+
     public void randomSong(){
         //add more songs and assign a random one
-        //should be called from update()?
         SceneManager.LoadScene("Song1Scene");
         pianoDB.addXP(Login.currentUsername, 5); //for testing purposes; user should get xp for this, but based on how well he played
     }

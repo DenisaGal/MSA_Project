@@ -39,6 +39,13 @@ public class XP : MonoBehaviour
     	return true;
     }
 
+    public bool lockPiano(){
+        if(pianoDB.getUserLevel(Login.currentUsername) == 1 && pianoDB.getUserXP(Login.currentUsername) == 5){
+            return true;
+        }
+        return false;
+    }
+
     public void showXP(){
         int userXP = pianoDB.getUserXP(Login.currentUsername);
 
@@ -53,6 +60,6 @@ public class XP : MonoBehaviour
     }
 
     public void showLevel(){
-        level.text = Convert.ToString(pianoDB.getUserLevel(Login.currentUsername));
+        level.text = Convert.ToString(pianoDB.getUserLevel(Login.currentUsername)) + " lvl";
     }
 }

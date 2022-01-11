@@ -32,13 +32,10 @@ public class ChangeSceneWithButton : MonoBehaviour
     }
 	
 	public void LoadScene(string SceneName){
-        if(SceneName == "MainPage"){
-            pianoDB.addXP(Login.currentUsername, pianoDB.getLessonMaxXP(lessonTitle));
-        }
 		SceneManager.LoadScene(SceneName);
 	}
 
-    public void GoToNextScene(string SceneName){
+    public void GoToNextSceneAndAddScore(string SceneName){
         pianoDB.addXP(Login.currentUsername, pianoDB.getLessonMaxXP(lessonTitle));
         SceneManager.LoadScene(SceneName);
     }
