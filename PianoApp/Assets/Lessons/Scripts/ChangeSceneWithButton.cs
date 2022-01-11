@@ -7,10 +7,22 @@ public class ChangeSceneWithButton : MonoBehaviour
 {
     DB pianoDB;
 
+    public string lessonTitle;
+
     // Start is called before the first frame update
     void Start()
     {
         pianoDB = GameObject.FindGameObjectWithTag("PDB").GetComponent<DB>();
+        lessonTitle = SceneManager.GetActiveScene().name;
+        if(lessonTitle.Contains("Lesson")){
+            lessonTitle = lessonTitle.Substring(0, 7);
+            lessonTitle = lessonTitle + "Scene";
+        }
+        else if(lessonTitle.Contains("Quiz")){
+            lessonTitle = lessonTitle.Substring(0, 5);
+            lessonTitle = lessonTitle + "Scene";
+        }
+        //Debug.Log(lessonTitle);
     }
 
     // Update is called once per frame
@@ -21,14 +33,13 @@ public class ChangeSceneWithButton : MonoBehaviour
 	
 	public void LoadScene(string SceneName){
         if(SceneName == "MainPage"){
-            //some delay should be added here so we can hear the last sound
-            pianoDB.addXP(Login.currentUsername, 5);
+            pianoDB.addXP(Login.currentUsername, pianoDB.getLessonMaxXP(lessonTitle));
         }
 		SceneManager.LoadScene(SceneName);
 	}
 
     public void GoToNextScene(string SceneName){
-        pianoDB.addXP(Login.currentUsername, 5);
+        pianoDB.addXP(Login.currentUsername, pianoDB.getLessonMaxXP(lessonTitle));
         SceneManager.LoadScene(SceneName);
     }
 }
